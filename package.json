@@ -1,0 +1,22 @@
+{
+  "name": "shipclaimiq-functional-starter",
+  "version": "1.0.0",
+  "description": "Carrier rebate/refund recovery platform starter with encrypted credential storage and carrier OAuth/API token connectors.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "morgan": "^1.10.0",
+    "nanoid": "^5.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

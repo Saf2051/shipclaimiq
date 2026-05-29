@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShipClaimIQ Functional Starter</title>
+  <style>
+    :root {
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --navy: #111827;
+      --muted: #6b7280;
+      --blue: #2563eb;
+      --purple: #6d28d9;
+      --green: #059669;
+      --amber: #f59e0b;
+      --red: #dc2626;
+      --border: #e5e7eb;
+      --shadow: 0 18px 50px rgba(17, 24, 39, 0.12);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--navy); }
+    header { position: sticky; top:0; z-index: 10; display:flex; justify-content:space-between; align-items:center; padding:16px 6%; background:rgba(255,255,255,.9); backdrop-filter: blur(14px); border-bottom:1px solid var(--border); }
+    .brand { display:flex; align-items:center; gap:12px; font-size:22px; font-weight:900; letter-spacing:-.04em; }
+    .logo { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; color:white; background:linear-gradient(135deg,var(--blue),var(--purple)); }
+    nav { display:flex; gap:18px; font-size:14px; font-weight:800; color:var(--muted); }
+    a { color:inherit; text-decoration:none; }
+    .hero { padding:70px 6% 42px; display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:center; background:radial-gradient(circle at top left,rgba(37,99,235,.18),transparent 35%),radial-gradient(circle at 80% 15%,rgba(109,40,217,.18),transparent 30%); }
+    h1 { font-size:clamp(42px,6vw,76px); line-height:.95; letter-spacing:-.075em; margin:0 0 18px; }
+    h2 { font-size:clamp(28px,4vw,44px); line-height:1.05; letter-spacing:-.055em; margin:0 0 12px; }
+    p { color:var(--muted); line-height:1.6; }
+    section { padding:56px 6%; }
+    .btn { border:0; border-radius:999px; padding:13px 20px; font-weight:900; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; }
+    .btn-primary { color:white; background:linear-gradient(135deg,var(--blue),var(--purple)); box-shadow:0 14px 28px rgba(37,99,235,.24); }
+    .btn-secondary { color:#1d4ed8; background:#eef2ff; }
+    .card { background:white; border:1px solid var(--border); border-radius:var(--radius); padding:22px; box-shadow:0 10px 30px rgba(17,24,39,.06); }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    input, select, textarea { width:100%; border:1px solid var(--border); border-radius:14px; padding:12px 13px; font-size:15px; outline:none; background:white; }
+    label { display:block; font-size:13px; font-weight:900; color:#374151; margin:0 0 7px; }
+    .field { margin-bottom:13px; }
+    .badge { display:inline-flex; border-radius:999px; padding:7px 10px; font-size:12px; font-weight:900; white-space:nowrap; }
+    .green { color:#065f46; background:#d1fae5; }
+    .blue { color:#1e40af; background:#dbeafe; }
+    .amber { color:#92400e; background:#fef3c7; }
+    .red { color:#991b1b; background:#fee2e2; }
+    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:16px; }
+    th, td { text-align:left; padding:12px; border-bottom:1px solid var(--border); font-size:14px; vertical-align:top; }
+    th { background:#f8fafc; color:#4b5563; font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+    .dark { background:#0f172a; color:white; }
+    .dark p, .dark label { color:rgba(255,255,255,.72); }
+    .dark .card p { color:var(--muted); }
+    .notice { padding:13px; border-radius:16px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:13px; line-height:1.5; }
+    .metric { font-size:34px; font-weight:900; letter-spacing:-.05em; margin:8px 0 0; }
+    @media(max-width:900px){ .hero,.grid,.grid-2{grid-template-columns:1fr} nav{display:none} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="logo">S</span> ShipClaimIQ</div>
+    <nav>
+      <a href="#signup">Signup</a>
+      <a href="#connect">Connect Carrier</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#audit">Audit</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <span class="badge blue">Functional starter app</span>
+        <h1>Carrier refund recovery with secure account access.</h1>
+        <p>Capture leads, store encrypted carrier credentials on the server, connect approved UPS/FedEx/DHL APIs, import shipments, and generate claim opportunities for late delivery, damage, billing errors, and LTL variances.</p>
+        <a href="#signup" class="btn btn-primary">Start Free Audit</a>
+        <a href="#dashboard" class="btn btn-secondary">View Dashboard</a>
+      </div>
+      <div class="card">
+        <h2>Security model</h2>
+        <p><b>Correct setup:</b> frontend collects signup info only. Carrier secrets go to your backend over HTTPS and are encrypted before database storage.</p>
+        <div class="notice">Do not store UPS/FedEx/DHL passwords in browser localStorage. This app uses backend encryption with AES-256-GCM.</div>
+      </div>
+    </section>
+
+    <section id="signup">
+      <h2>1. Lead signup</h2>
+      <p>This form now posts to a real backend endpoint and saves into SQLite.</p>
+      <div class="card">
+        <form id="leadForm">
+          <div class="grid-2">
+            <div class="field"><label>Name</label><input id="name" required placeholder="John Smith"></div>
+            <div class="field"><label>Company</label><input id="company" required placeholder="ABC Supply"></div>
+            <div class="field"><label>Email</label><input id="email" type="email" required placeholder="john@company.com"></div>
+            <div class="field"><label>Phone</label><input id="phone" placeholder="555-555-5555"></div>
+            <div class="field"><label>Carrier mix</label><select id="carriers"><option>UPS + FedEx</option><option>UPS only</option><option>FedEx only</option><option>DHL only</option><option>Parcel + LTL</option></select></div>
+            <div class="field"><label>Monthly volume</label><select id="volume"><option>100 - 500</option><option>501 - 2,500</option><option>2,501 - 10,000</option><option>10,000+</option></select></div>
+          </div>
+          <div class="field"><label>Monthly spend</label><select id="spend"><option>$2,500 - $10,000</option><option>$10,001 - $50,000</option><option>$50,001 - $250,000</option><option>$250,000+</option></select></div>
+          <div class="field"><label>Biggest issue</label><textarea id="pain" rows="3" placeholder="Late delivery, damage, invoice fees, LTL reclass..."></textarea></div>
+          <button class="btn btn-primary">Save Lead</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="connect" class="dark">
+      <h2>2. Secure carrier connection</h2>
+      <p>Use this after the customer signs your authorization agreement. Credentials are encrypted server-side before storage.</p>
+      <div class="card">
+        <form id="carrierForm">
+          <div class="grid-2">
+            <div class="field"><label>Carrier</label><select id="carrier"><option>UPS</option><option>FedEx</option><option>DHL</option><option>LTL</option></select></div>
+            <div class="field"><label>Account number</label><input id="accountNumber" required placeholder="Carrier account #"></div>
+            <div class="field"><label>Auth type</label><select id="authType"><option>oauth_client_credentials</option><option>api_key_secret</option><option>edi_sftp</option></select></div>
+            <div class="field"><label>Lead ID optional</label><input id="leadId" placeholder="Paste lead ID if available"></div>
+            <div class="field"><label>Client ID / API Key</label><input id="clientId" placeholder="Not a password"></div>
+            <div class="field"><label>Client Secret / API Secret</label><input id="clientSecret" type="password" placeholder="Stored encrypted"></div>
+          </div>
+          <div class="field"><label>Notes</label><textarea id="notes" rows="2" placeholder="Approved scopes, invoice access, tracking API, etc."></textarea></div>
+          <button class="btn btn-primary">Encrypt & Save Carrier Account</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="dashboard">
+      <h2>3. Dashboard</h2>
+      <div class="grid">
+        <div class="card"><span class="badge blue">Leads</span><div class="metric" id="leadCount">0</div></div>
+        <div class="card"><span class="badge green">Carrier Accounts</span><div class="metric" id="accountCount">0</div></div>
+        <div class="card"><span class="badge amber">Open Opportunities</span><div class="metric" id="oppCount">0</div></div>
+      </div>
+      <br>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Recent Leads</h3>
+          <table><thead><tr><th>Company</th><th>Email</th><th>Carriers</th></tr></thead><tbody id="leadsTable"></tbody></table>
+        </div>
+        <div class="card">
+          <h3>Carrier Accounts</h3>
+          <table><thead><tr><th>Carrier</th><th>Account</th><th>Auth</th></tr></thead><tbody id="accountsTable"></tbody></table>
+        </div>
+      </div>
+    </section>
+
+    <section id="audit">
+      <h2>4. Claim opportunity engine</h2>
+      <p>Import sample shipments, then run the audit. Replace the sample data later with carrier tracking, invoice feeds, CSV uploads, EDI, or API pulls.</p>
+      <button class="btn btn-secondary" onclick="importSample()">Import Sample Shipments</button>
+      <button class="btn btn-primary" onclick="runAudit()">Run Audit</button>
+      <br><br>
+      <div class="card">
+        <h3>Opportunities</h3>
+        <table><thead><tr><th>Carrier</th><th>Tracking</th><th>Type</th><th>Reason</th><th>Est.</th></tr></thead><tbody id="oppsTable"></tbody></table>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    async function api(path, options = {}) {
+      const response = await fetch(path, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.error || "Request failed");
+      return data;
+    }
+
+    document.getElementById("leadForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const payload = {
+        name: name.value,
+        company: company.value,
+        email: email.value,
+        phone: phone.value,
+        carriers: carriers.value,
+        volume: volume.value,
+        spend: spend.value,
+        pain: pain.value
+      };
+      const result = await api("/api/leads", { method: "POST", body: JSON.stringify(payload) });
+      alert("Lead saved. Lead ID: " + result.id);
+      e.target.reset();
+      loadDashboard();
+    });
+
+    document.getElementById("carrierForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const c = carrier.value;
+      const credentials = c === "DHL"
+        ? { apiKey: clientId.value, apiSecret: clientSecret.value }
+        : { clientId: clientId.value, clientSecret: clientSecret.value };
+
+      const payload = {
+        leadId: leadId.value || null,
+        carrier: c,
+        accountNumber: accountNumber.value,
+        authType: authType.value,
+        credentials,
+        notes: notes.value
+      };
+
+      const result = await api("/api/carrier-accounts", { method: "POST", body: JSON.stringify(payload) });
+      alert(result.message);
+      e.target.reset();
+      loadDashboard();
+    });
+
+    async function importSample() {
+      await api("/api/shipments/import-sample", { method: "POST" });
+      alert("Sample shipments imported.");
+    }
+
+    async function runAudit() {
+      await api("/api/audit/run", { method: "POST" });
+      loadOpportunities();
+      loadDashboard();
+    }
+
+    async function loadDashboard() {
+      const [leads, accounts, opps] = await Promise.all([
+        api("/api/leads"),
+        api("/api/carrier-accounts"),
+        api("/api/opportunities")
+      ]);
+
+      leadCount.textContent = leads.length;
+      accountCount.textContent = accounts.length;
+      oppCount.textContent = opps.length;
+
+      leadsTable.innerHTML = leads.slice(0, 8).map(l => `<tr><td>${escapeHtml(l.company)}</td><td>${escapeHtml(l.email)}</td><td>${escapeHtml(l.carriers || "")}</td></tr>`).join("");
+      accountsTable.innerHTML = accounts.slice(0, 8).map(a => `<tr><td>${escapeHtml(a.carrier)}</td><td>${escapeHtml(a.accountNumberMasked)}</td><td>${escapeHtml(a.authType)}</td></tr>`).join("");
+    }
+
+    async function loadOpportunities() {
+      const opps = await api("/api/opportunities");
+      oppsTable.innerHTML = opps.map(o => `<tr><td>${escapeHtml(o.carrier)}</td><td>${escapeHtml(o.tracking_number)}</td><td>${escapeHtml(o.type)}</td><td>${escapeHtml(o.reason)}</td><td>$${Number(o.estimated_recovery).toFixed(2)}</td></tr>`).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
+      }[s]));
+    }
+
+    loadDashboard();
+    loadOpportunities();
+  </script>
+</body>
+</html>
